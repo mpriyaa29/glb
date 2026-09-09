@@ -1,0 +1,94 @@
+.arContainer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #090d16;
+  z-index: 150;
+  overflow: hidden;
+}
+
+.modelViewerElement {
+  width: 100% !important;
+  height: 100% !important;
+  --poster-color: transparent;
+}
+
+.customArButton {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(16, 185, 129, 0.4);
+  z-index: 60;
+  transition: all 0.2s ease;
+}
+
+.customArButton:hover {
+  transform: translateX(-50%) scale(1.05);
+  box-shadow: 0 16px 36px rgba(16, 185, 129, 0.6);
+}
+
+.progressBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.updateBar {
+  background: #6366f1;
+  width: 0%;
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.errorOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  z-index: 100;
+  color: #f8fafc;
+}
+
+.errorOverlay h3 {
+  font-size: 1.3rem;
+  margin: 16px 0 8px 0;
+}
+
+.errorOverlay p {
+  color: #94a3b8;
+  max-width: 360px;
+  margin-bottom: 24px;
+  font-size: 0.9rem;
+}
+
+.errorBtn {
+  padding: 12px 24px;
+  background: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}

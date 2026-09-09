@@ -1,0 +1,62 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #040507;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  user-select: none;
+}
+
+.loaderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.svgContainer {
+  width: 90px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.infinitySvg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.animatedPath {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: strokeDashAnim 1.8s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+}
+
+@keyframes strokeDashAnim {
+  0% {
+    stroke-dashoffset: 200;
+  }
+  50% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -200;
+  }
+}
+
+.percentFont {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.4em;
+  padding-left: 0.4em;
+  text-align: center;
+}
