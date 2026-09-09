@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import '@google/model-viewer';
 import { useAppStore } from '../../store/appStore';
 import { ARGuideOverlay } from './ARGuideOverlay';
-import { Smartphone, RefreshCw, AlertCircle } from 'lucide-react';
+import { Smartphone, AlertCircle, Sparkles } from 'lucide-react';
 import styles from './ARView.module.css';
 
 export function ARView() {
@@ -11,6 +11,11 @@ export function ARView() {
   const [isPlaced, setIsPlaced] = useState(false);
   const [arStatus, setArStatus] = useState('not-presenting');
   const [loadError, setLoadError] = useState(false);
+
+  // Form full absolute HTTPS URL for Android Scene Viewer and iOS Quick Look compatibility
+  const fullModelUrl = selectedProduct
+    ? new URL(selectedProduct.modelPath, window.location.origin).href
+    : '';
 
   useEffect(() => {
     const el = modelViewerRef.current;
@@ -33,22 +38,21 @@ export function ARView() {
     el.addEventListener('ar-status', handleArStatus);
     el.addEventListener('error', handleError);
 
-    // Attempt auto AR trigger if supported on mobile
-    if (el.canActivateAR) {
-      setTimeout(() => {
-        try {
-          el.activateAR();
-        } catch (e) {
-          console.log('Manual AR trigger required');
-        }
-      }, 500);
-    }
-
     return () => {
       el.removeEventListener('ar-status', handleArStatus);
       el.removeEventListener('error', handleError);
     };
   }, []);
+
+  const handleManualActivateAR = () => {
+    if (modelViewerRef.current) {
+      try {
+        modelViewerRef.current.activateAR();
+      } catch (err) {
+        console.error('AR Activation Error:', err);
+      }
+    }
+  };
 
   const handleResetPlacement = () => {
     if (modelViewerRef.current) {
@@ -87,7 +91,7 @@ export function ARView() {
         <div className={styles.errorOverlay}>
           <AlertCircle size={40} color="#ef4444" />
           <h3>Unable to launch WebAR</h3>
-          <p>Failed to initialize 3D model stream. Ensure your device browser supports WebXR or Quick Look.</p>
+          <p>Ensure your mobile browser (Safari on iOS or Chrome on Android) has camera permissions enabled and HTTPS connection.</p>
           <button onClick={() => setViewMode('3d')} className={styles.errorBtn}>
             Return to 3D Viewer
           </button>
@@ -97,10 +101,10 @@ export function ARView() {
       {/* Google Model Viewer Web Component */}
       <model-viewer
         ref={modelViewerRef}
-        src={selectedProduct.modelPath}
+        src={fullModelUrl}
         alt={`3D AR model of ${selectedProduct.name}`}
         ar
-        ar-modes="webxr scene-viewer quick-look"
+        ar-modes="quick-look scene-viewer webxr"
         ar-scale={selectedProduct.arScale || 'fixed'}
         camera-controls
         touch-action="pan-y"
@@ -112,9 +116,13 @@ export function ARView() {
         loading="eager"
         class={styles.modelViewerElement}
       >
-        <button slot="ar-button" className={styles.customArButton}>
-          <Smartphone size={20} />
-          <span>Launch Camera AR</span>
+        <button
+          slot="ar-button"
+          onClick={handleManualActivateAR}
+          className={styles.customArButton}
+        >
+          <Smartphone size={22} />
+          <span>View in Your Room (AR)</span>
         </button>
 
         <div slot="progress-bar" className={styles.progressBar}>
