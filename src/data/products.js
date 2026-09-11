@@ -160,6 +160,34 @@ export const PRODUCTS = [
     featured: true,
     polygonCount: '9,800',
     dracoCompressed: true
+  },
+  {
+    id: 'sofa-01',
+    name: 'Modern Lounge Sofa',
+    category: 'furniture',
+    price: 1299,
+    rating: 4.8,
+    reviewsCount: 87,
+    description: 'Elegant contemporary lounge sofa with deep cushioning, clean silhouette, and solid hardwood legs. Ideal for living rooms and open-plan spaces.',
+    dimensions: {
+      width: '210 cm',
+      height: '82 cm',
+      depth: '90 cm',
+      weight: '45 kg'
+    },
+    materials: ['High-density Foam', 'Linen Upholstery', 'Solid Oak Legs'],
+    colorVariants: [
+      { name: 'Slate Gray', hex: '#6b7b8d' },
+      { name: 'Cream Beige', hex: '#d9c8a9' },
+      { name: 'Forest Green', hex: '#3a5a40' },
+      { name: 'Charcoal', hex: '#2d2d2d' }
+    ],
+    modelPath: '/models/sofa_model.glb',
+    thumbnail: '/thumbnails/sofa-thumb.jpg',
+    arScale: 'fixed',
+    featured: true,
+    polygonCount: '14,200',
+    dracoCompressed: true
   }
 ];
 

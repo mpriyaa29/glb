@@ -1,6 +1,7 @@
 import React from 'react';
-import { ArrowLeft, RotateCw, Info, Smartphone, Maximize, RefreshCw, QrCode } from 'lucide-react';
+import { ArrowLeft, RotateCw, Info, Smartphone, Maximize, QrCode } from 'lucide-react';
 import { useAppStore } from '../../store/appStore';
+import { launchNativeAR } from '../../utils/arLauncher';
 import styles from './ViewerControls.module.css';
 
 export function ViewerControls({ onToggleFullscreen, isFullscreen }) {
@@ -20,7 +21,10 @@ export function ViewerControls({ onToggleFullscreen, isFullscreen }) {
     if (arSupport.platform === 'desktop') {
       setQrModalOpen(true);
     } else {
-      setViewMode('ar');
+      const launched = launchNativeAR(selectedProduct);
+      if (!launched) {
+        setViewMode('ar');
+      }
     }
   };
 
@@ -66,7 +70,7 @@ export function ViewerControls({ onToggleFullscreen, isFullscreen }) {
         {/* Enter AR Call To Action */}
         <button onClick={handleEnterAR} className={styles.enterArCta}>
           {arSupport.platform === 'desktop' ? <QrCode size={20} /> : <Smartphone size={20} />}
-          <span>{arSupport.platform === 'desktop' ? 'Scan to View in AR' : 'Enter AR Mode'}</span>
+          <span>{arSupport.platform === 'desktop' ? 'Scan to View in AR' : 'Enter AR Camera Mode'}</span>
         </button>
       </div>
     </div>

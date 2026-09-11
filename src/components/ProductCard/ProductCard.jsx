@@ -1,6 +1,7 @@
 import React from 'react';
 import { Eye, Smartphone, Star, QrCode } from 'lucide-react';
 import { useAppStore } from '../../store/appStore';
+import { launchNativeAR } from '../../utils/arLauncher';
 import styles from './ProductCard.module.css';
 
 export function ProductCard({ product }) {
@@ -15,7 +16,11 @@ export function ProductCard({ product }) {
       selectProduct(product, 'catalog');
       setQrModalOpen(true);
     } else {
-      selectProduct(product, 'ar');
+      selectProduct(product, 'catalog');
+      const launched = launchNativeAR(product);
+      if (!launched) {
+        selectProduct(product, 'ar');
+      }
     }
   };
 
